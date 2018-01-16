@@ -36,9 +36,10 @@ public class TimeTable {
 
 	        
 	        //Make sure that the first day is before the last day
-	        if (!firstDay.before(lastDay)) {
-	        	throw new DateOutOfRangeException ("Second date specified is not  before the first date specified.");
-	        }
+
+	        //if (!firstDay.before(lastDay)) {
+	        //	throw new DateOutOfRangeException ("Second date specified is not before the first date specified.");
+	        //}
 	        
 	        
 	        //Create the first CalDay object with the starting date and add to list
@@ -49,8 +50,9 @@ public class TimeTable {
 	            nextDay.add(nextDay.DAY_OF_MONTH, 1);
 	        }
 	        
-	        //Retrieve the appts - <appt> 
-		for (int i = 0; i < appts.size(); i++) {
+	        //Retrieve the appts - <appt>
+		  //for (int i = 0; i < appts.size(); i++) {
+		    for (int i = 0; i < appts.size(); ++i) {
 			Appt appt=appts.get(i);
 			if(!appt.getValid()) continue;
 			// Figure out which days the appointment occurs on
