@@ -1,0 +1,72 @@
+Bug Report:
+
+Bug 1: Appt.java, isValid() method (Line 112)
+
+java.lang.AssertionError: 
+Expected :false
+Actual   :true
+  
+    private void isValid() {
+    	int NumDaysInMonth= CalendarUtil.NumDaysInMonth(startYear,startMonth-1);
+
+    	if(startHour<0 || startHour>23)
+    		this.valid=false;
+    	else
+        	if(startMinute<0 || startMinute>59)
+        		this.valid=false;
+        	else
+            	if(startDay<1 && startDay>NumDaysInMonth)   <----------(startDay<1 || startDay>NumDaysInMonth) 
+            		this.valid=false;
+            	else
+                	if(startMonth<1 || startMonth>12)         
+                		this.valid=false;
+                	else
+                		this.valid=true;
+    }
+
+
+
+Bug 2: Appt.java, toString() method (Line 294)
+
+java.lang.AssertionError: 
+Expected  : 8/13/2018 at 12:30pm ,My Birthday, Its My Birthday This Year.
+Actual    :null
+at calendar.ApptTest.test012(ApptTest.java:471)
+	
+    public String toString()
+    {
+		if (getValid()) {                            <-----------(!getValid())                        
+		    return null;
+		}
+         String day= this.getStartMonth()+"/"+this.getStartDay()+"/"+this.getStartYear() + " at ";
+        return "\t"+ day +  this.represntationApp()  + " ," +  getTitle()+ ", "+  getDescription()+"\n";
+    }
+
+
+
+
+Bug 3: TimeTable.java, getApptRange() method (Line 31)
+
+java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+
+      // For each day in the list, calculate the difference between the
+      // first day and the day of occurrence and add the appointment to
+      // the correct CalDay
+			
+      int daysDifference = 0;
+      nextDay = (GregorianCalendar) firstDay.clone();
+      Iterator<GregorianCalendar> itr = apptOccursOnDays.iterator();
+      while (itr.hasNext()) {
+             GregorianCalendar apptOccursOn = (GregorianCalendar) itr.next();
+	     while (nextDay.before(apptOccursOn)) {
+		    daysDifference = daysDifference + daysDifference;      <--------------daysDifference++
+		    nextDay.add(nextDay.DAY_OF_MONTH, 1);
+	     }
+	     
+             CalDay calDayOfAppt = (CalDay) calDays.get(daysDifference);
+	     calDayOfAppt.addAppt(appt);
+
+	}
+
+
+
